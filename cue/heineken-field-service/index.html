@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heineken · Field Service — Cue Prototype</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system@2.24.4/assets/styles/salesforce-lightning-design-system.min.css">
+<style>
+  :root{
+    --sf-blue:#0176d3;
+    --sf-blue-dark:#014486;
+    --ink:#16325c;
+    --muted:#5c6b80;
+    --bg:#f3f6fb;
+    --heineken:#007a33;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+  /* HERO */
+  .hero{
+    background:linear-gradient(120deg,#032d60 0%,#0176d3 60%,#1ab0ff 100%);
+    color:#fff;
+    padding:72px 0 80px;
+  }
+  .hero .wrap{max-width:1100px;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.78rem;
+    font-weight:600;
+    opacity:.9;
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:3rem;
+    line-height:1.08;
+    margin:0 0 18px;
+    font-weight:700;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:italic;color:#bfe5ff;}
+  .hero p{
+    font-size:1.18rem;
+    line-height:1.5;
+    max-width:60ch;
+    margin:0;
+    opacity:.95;
+  }
+  /* SECTION */
+  section.block{padding:64px 0;}
+  h2.section-title{
+    font-size:1.9rem;
+    margin:0 0 6px;
+    font-weight:700;
+  }
+  .section-sub{color:var(--muted);font-size:1.05rem;margin:0 0 32px;max-width:65ch;}
+  /* VALUE DRIVERS */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:24px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid #e3e8f0;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 1px 3px rgba(16,49,92,.06);
+  }
+  .card .emoji{font-size:1.7rem;display:block;margin-bottom:12px;}
+  .card h3{font-size:1.1rem;margin:0 0 8px;line-height:1.3;}
+  .card .metric{
+    color:var(--sf-blue);
+    font-weight:600;
+    font-size:.9rem;
+    margin:0 0 8px;
+  }
+  .card p{color:var(--muted);font-size:.92rem;margin:0;line-height:1.5;}
+  /* PROTOTYPE */
+  .proto-area{background:#fff;border-radius:16px;border:1px solid #e3e8f0;padding:40px;box-shadow:0 4px 18px rgba(16,49,92,.07);}
+  .seg{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    margin-bottom:28px;
+  }
+  .seg button{
+    border:1px solid #d4dbe6;
+    background:#fff;
+    color:var(--ink);
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:.85rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .seg button:hover{border-color:var(--sf-blue);}
+  .seg button.active{background:var(--sf-blue);color:#fff;border-color:var(--sf-blue);}
+  .stage{display:flex;gap:34px;align-items:flex-start;justify-content:center;flex-wrap:wrap;}
+  .coachmark{
+    flex:1 1 260px;
+    max-width:320px;
+    background:#eef6ff;
+    border-left:4px solid var(--sf-blue);
+    border-radius:8px;
+    padding:18px 20px;
+  }
+  .coachmark .step-label{
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--sf-blue);font-weight:700;margin-bottom:8px;
+  }
+  .coachmark h4{margin:0 0 10px;font-size:1.05rem;}
+  .coachmark p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.55;}
+  /* PHONE */
+  .phone{
+    width:390px;
+    max-width:100%;
+    background:#0c0c0e;
+    border-radius:42px;
+    padding:12px;
+    box-shadow:0 18px 50px rgba(3,45,96,.28);
+    flex:0 0 auto;
+  }
+  .phone-notch{
+    height:26px;display:flex;justify-content:center;align-items:flex-start;
+  }
+  .phone-notch span{width:130px;height:22px;background:#0c0c0e;border-radius:0 0 16px 16px;}
+  .screen{
+    background:#f4f6f9;
+    border-radius:32px;
+    overflow:hidden;
+    height:720px;
+    display:flex;
+    flex-direction:column;
+  }
+  .statusbar{
+    background:#fff;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 22px 4px;font-size:.78rem;font-weight:600;color:#16325c;
+  }
+  .appbar{
+    background:#032d60;color:#fff;padding:14px 18px;
+    display:flex;align-items:center;gap:10px;font-weight:600;font-size:1rem;
+  }
+  .appbar .back{cursor:pointer;font-size:1.1rem;}
+  .sync{
+    display:flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;
+    padding:6px 14px;background:#fef5e7;color:#8a5a00;border-bottom:1px solid #f4dca8;
+  }
+  .sync.online{background:#ebf7ed;color:#256a3a;border-color:#bce3c5;}
+  .sync .dot{width:8px;height:8px;border-radius:50%;background:#e6a817;}
+  .sync.online .dot{background:#2e844a;}
+  .scroll{flex:1;overflow-y:auto;padding:14px;}
+  .tabbar{
+    display:flex;background:#fff;border-top:1px solid #e3e8f0;padding:8px 0;
+  }
+  .tabbar div{flex:1;text-align:center;font-size:.65rem;color:#8a94a6;}
+  .tabbar div.act{color:var(--sf-blue);font-weight:700;}
+  .tabbar .ic{font-size:1.1rem;display:block;margin-bottom:2px;}
+  .map{
+    height:140px;border-radius:10px;margin-bottom:12px;
+    background:
+      linear-gradient(rgba(1,118,211,.04),rgba(1,118,211,.04)),
+      repeating-linear-gradient(0deg,#dde7f0 0 1px,transparent 1px 28px),
+      repeating-linear-gradient(90deg,#dde7f0 0 1px,transparent 1px 28px),
+      #eef3f8;
+    position:relative;border:1px solid #e3e8f0;
+  }
+  .map .pin{position:absolute;width:22px;height:22px;border-radius:50% 50% 50% 0;
+    background:var(--sf-blue);transform:rotate(-45deg);box-shadow:0 2px 4px rgba(0,0,0,.2);}
+  .map .pin.p1{top:40px;left:60px;background:#ba0517;}
+  .map .pin.p2{top:78px;left:150px;background:#e6a817;}
+  .map .pin.p3{top:50px;left:240px;background:#2e844a;}
+  .wo-card{
+    background:#fff;border:1px solid #e3e8f0;border-radius:10px;padding:14px;margin-bottom:10px;
+    cursor:pointer;transition:box-shadow .15s;
+  }
+  .wo-card:hover{box-shadow:0 2px 10px rgba(1,118,211,.15);}
+  .wo-time{font-size:.78rem;color:var(--muted);display:flex;justify-content:space-between;}
+  .wo-title{font-weight:600;font-size:.98rem;margin:4px 0 4px;}
+  .wo-meta{font-size:.78rem;color:var(--muted);line-height:1.4;}
+  .pill{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:999px;}
+  .pill.p1{background:#feebec;color:#ba0517;}
+  .pill.p2{background:#fef5e7;color:#8a5a00;}
+  .pill.p3{background:#ebf7ed;color:#256a3a;}
+  .sig-pad{
+    height:150px;border:2px dashed #c2cddb;border-radius:10px;background:#fff;
+    display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;
+    cursor:crosshair;
+  }
+  .sig-pad svg{position:absolute;inset:0;width:100%;height:100%;}
+  .photo-thumb{
+    border-radius:8px;overflow:hidden;border:1px solid #e3e8f0;aspect-ratio:1;
+    display:flex;align-items:center;justify-content:center;font-size:1.6rem;background:#eef3f8;
+  }
+  /* WHAT WE HEARD */
+  .pain-card{
+    background:#fff;border:1px solid #e3e8f0;border-radius:12px;padding:22px;
+    border-left:4px solid #ba0517;
+  }
+  .pain-card h3{margin:0 0 8px;font-size:1.02rem;line-height:1.35;}
+  .pain-card .impact{color:var(--muted);font-size:.9rem;margin:0 0 10px;line-height:1.5;}
+  .pain-card .work{font-size:.8rem;color:#8a94a6;border-top:1px solid #eef1f6;padding-top:10px;}
+  .pain-card .work b{color:var(--ink);}
+  /* FOOTER */
+  footer{background:#08213f;color:#aebdd1;padding:30px 0;font-size:.85rem;text-align:center;}
+  footer b{color:#fff;}
+  footer .disc{margin-top:8px;font-size:.78rem;opacity:.75;max-width:60ch;margin-left:auto;margin-right:auto;}
+  @media(max-width:640px){.hero h1{font-size:2.2rem;}.proto-area{padding:20px;}}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Heineken · Field Service</p>
+    <h1>Every cellar visit, <em>done right the first time</em></h1>
+    <p>Give your refrigeration technicians complete asset history, guided workflows and full offline capability — so they fix it faster, prove the work, and keep the beer cold.</p>
+  </div>
+</div>
+
+<!-- VALUE DRIVERS -->
+<section class="block">
+  <div class="wrap">
+    <h2 class="section-title">Why it matters</h2>
+    <p class="section-sub">Four outcomes that move the needle for Heineken's field service operation.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="emoji">🔧</span>
+        <h3>Higher first-time fix rate</h3>
+        <p class="metric">% of jobs completed without callback</p>
+        <p>Instant access to asset history, prior fault codes and parts means confident diagnostics before the unit is even opened.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">📶</span>
+        <h3>Productive even offline</h3>
+        <p class="metric">Technician utilization % · jobs/day</p>
+        <p>Offline-first app keeps work orders and records fully usable in cellars and confined spaces; everything syncs when signal returns.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">✍️</span>
+        <h3>Digital proof & compliance</h3>
+        <p class="metric">% jobs with photo/signature · audit pass rate</p>
+        <p>On-site photo and signature capture creates undisputable proof of work and a clean compliance trail.</p>
+      </div>
+      <div class="card">
+        <span class="emoji">✅</span>
+        <h3>Consistent guided service</h3>
+        <p class="metric">Avg. time on-site · service quality score</p>
+        <p>Step-by-step guided workflows ensure no step is missed and every technician delivers to the same standard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOTYPE -->
+<section class="block" style="background:#eaf1f9;">
+  <div class="wrap">
+    <h2 class="section-title">See it in action</h2>
+    <p class="section-sub">A day in the life of a Heineken refrigeration technician, inside the Field Service mobile app. Click through each step.</p>
+    <div class="proto-area">
+      <div id="proto-root"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE HEARD -->
+<section class="block">
+  <div class="wrap">
+    <h2 class="section-title">What we heard from your team</h2>
+    <p class="section-sub">The pains your technicians and dispatchers raised — and what they cost today.</p>
+    <div class="grid">
+      <div class="pain-card">
+        <h3>Arriving without asset history or service records</h3>
+        <p class="impact">Delays in diagnostics, repeated work, poor first-time fix rates.</p>
+        <p class="work"><b>Today:</b> Phone calls to the office or paper notes from the last visit.</p>
+      </div>
+      <div class="pain-card">
+        <h3>No offline support in cellars & confined spaces</h3>
+        <p class="impact">Can't access work orders or complete records when the network drops.</p>
+        <p class="work"><b>Today:</b> Notes on paper, re-keyed manually later.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Can't capture photos or signatures on-site</h3>
+        <p class="impact">No visual proof, disputes over delivery, compliance gaps.</p>
+        <p class="work"><b>Today:</b> Paper signature sheets and a separate camera.</p>
+      </div>
+      <div class="pain-card">
+        <h3>No guided workflow or checklist visibility</h3>
+        <p class="impact">Inconsistent service, missed steps, extended on-site time.</p>
+        <p class="work"><b>Today:</b> Reliance on memory or verbal dispatcher instructions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>Prototype generated by Cue</b>
+    <div class="disc">This is an illustrative concept created for a Heineken discovery conversation. It is not a final product, and screens use sample data for demonstration only.</div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const {useState} = React;
+const SP = "https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system@2.24.4/assets/icons/utility-sprite/svg/symbols.svg#";
+
+const SCREENS = [
+  {id:"daily", title:"Daily Work Orders", step:"Step 1 of 5",
+   heading:"6:00 AM — Today's run",
+   narr:"At 6 AM the technician opens the app and sees today's 8 refrigeration jobs, color-coded by priority and mapped by location, with quick-view details for the first stop."},
+  {id:"asset", title:"Asset History", step:"Step 2 of 5",
+   heading:"Know before you open the unit",
+   narr:"Arriving at the first job, the tech taps into the asset and sees the compressor was rebuilt 6 months ago, prior fault codes, parts replaced and today's symptom — enabling confident diagnostics."},
+  {id:"steps", title:"Guided Work Steps", step:"Step 3 of 5",
+   heading:"A guided repair, fully offline",
+   narr:"The technician follows a guided workflow: inspect → diagnose → swap parts → test → document. Each step marks complete, and the offline indicator shows actions queued for sync."},
+  {id:"parts", title:"Parts Checklist", step:"Step 4 of 5",
+   heading:"Confirm parts, track usage",
+   narr:"Before replacing the compressor seal, the tech confirms part numbers and serials against inventory, checks them off, and the system auto-updates usage counts for compliance."},
+  {id:"capture", title:"Photo & Signature", step:"Step 5 of 5",
+   heading:"Prove the work is done",
+   narr:"After the repair, the tech photographs the working unit, captures the customer's signature, adds notes and submits — all syncing to Salesforce when connectivity resumes."}
+];
+
+function StatusBar(){return(
+  <div className="statusbar">
+    <span>9:41</span>
+    <span>✈ 📶 🔋</span>
+  </div>);}
+
+function TabBar({active}){
+  const tabs=[["Schedule","📅"],["Inventory","📦"],["Dashboard","📊"],["Alerts","🔔"],["Profile","👤"]];
+  return(<div className="tabbar">{tabs.map((t,i)=>
+    <div key={t[0]} className={i===active?"act":""}><span className="ic">{t[1]}</span>{t[0]}</div>)}</div>);
+}
+
+function ScreenDaily(){
+  const jobs=[
+    {t:"07:00 – 09:00",p:"p1",pl:"P1",title:"Heineken Distribution Center — Walk-in cooler down",no:"WO-100482",meta:"Pieter Maritzweg 1, Den Bosch · Asset HKN-WIC-4400"},
+    {t:"09:30 – 10:30",p:"p2",pl:"P2",title:"Café De Klok — Tap fridge not cooling",no:"WO-100517",meta:"Korte Putstraat 12, Den Bosch · Asset GA37-D"},
+    {t:"11:00 – 12:30",p:"p3",pl:"P3",title:"Restaurant Vivaldi — New under-counter install",no:"WO-100533",meta:"Markt 28, Eindhoven · Asset HKN-UC-220"},
+    {t:"13:30 – 14:30",p:"p3",pl:"P3",title:"Brasserie Noord — Quarterly maintenance",no:"WO-100540",meta:"Stationsplein 4, Tilburg · Asset GA90-N"}
+  ];
+  return(<div className="scroll">
+    <div className="map"><div className="pin p1"></div><div className="pin p2"></div><div className="pin p3"></div></div>
+    <div style={{fontSize:".82rem",color:"#5c6b80",margin:"4px 2px 12px"}}><b style={{color:"#16325c"}}>Overview</b> · You have 8 service appointments today</div>
+    {jobs.map(j=>(
+      <div className="wo-card" key={j.no}>
+        <div className="wo-time"><span>🕐 {j.t}</span><span className={"pill "+j.p}>{j.pl}</span></div>
+        <div className="wo-title">{j.title}</div>
+        <div className="wo-meta">{j.no} · {j.meta}</div>
+      </div>))}
+  </div>);
+}
+
+function ScreenAsset(){
+  const hist=[
+    {d:"2024-07-15",e:"Compressor rebuild",by:"J. de Vries",badge:"Completed",c:"success"},
+    {d:"2024-03-02",e:"Fault E-21 · low refrigerant",by:"M. Jansen",badge:"Resolved",c:""},
+    {d:"2023-11-20",e:"Annual maintenance",by:"P. Bakker",badge:"Completed",c:"success"}
+  ];
+  return(<div className="scroll">
+    <div style={{background:"#fff",border:"1px solid #e3e8f0",borderRadius:10,padding:14,marginBottom:12}}>
+      <div style={{fontWeight:700,fontSize:".95rem"}}>Walk-in Cooler — HKN-WIC-4400</div>
+      <div style={{fontSize:".8rem",color:"#5c6b80",marginTop:6,lineHeight:1.5}}>
+        Model: Embraco GA-4400 · Serial: 98234766<br/>
+        Installed: 2019-05-12 · Refrigerant: R-290<br/>
+        Warranty: Active until 2026-05-12
+      </div>
+      <div style={{marginTop:10}}><span className="pill p1">Today: Fault E-04 — temp not holding</span></div>
+    </div>
+    <div style={{fontSize:".78rem",textTransform:"uppercase",letterSpacing:".08em",color:"#5c6b80",fontWeight:700,margin:"6px 2px 8px"}}>Service Timeline</div>
+    {hist.map((h,i)=>(
+      <div key={i} style={{display:"flex",gap:12,marginBottom:14}}>
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+          <div style={{width:12,height:12,borderRadius:"50%",background:"#0176d3"}}></div>
+          {i<hist.length-1 && <div style={{flex:1,width:2,background:"#cdd9e6"}}></div>}
+        </div>
+        <div style={{background:"#fff",border:"1px solid #e3e8f0",borderRadius:8,padding:"10px 12px",flex:1}}>
+          <div style={{fontSize:".75rem",color:"#5c6b80"}}>{h.d}</div>
+          <div style={{fontWeight:600,fontSize:".88rem",margin:"2px 0 4px"}}>{h.e}</div>
+          <div style={{fontSize:".75rem",color:"#5c6b80"}}>Technician: {h.by} · <span className={"slds-badge "+(h.c?("slds-theme_"+h.c):"")}>{h.badge}</span></div>
+        </div>
+      </div>))}
+  </div>);
+}
+
+function ScreenSteps(){
+  const stages=["Inspect","Diagnose","Parts Swap","Test","Document"];
+  const [cur,setCur]=useState(1);
+  return(<div className="scroll">
+    <div style={{fontWeight:700,fontSize:".95rem",marginBottom:4}}>Compressor Repair — WO-100482</div>
+    <div style={{fontSize:".78rem",color:"#5c6b80",marginBottom:14}}>Follow each step. Tap a stage to mark progress.</div>
+    {/* SLDS-style path vertical for phone */}
+    <div style={{display:"flex",flexDirection:"column",gap:0,marginBottom:8}}>
+      {stages.map((s,i)=>{
+        const done=i<cur, isCur=i===cur;
+        return(
+        <div key={s} onClick={()=>setCur(i)} style={{display:"flex",alignItems:"center",gap:12,padding:"6px 0",cursor:"pointer"}}>
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+            <div style={{width:26,height:26,borderRadius:"50%",
+              background:done?"#2e844a":isCur?"#0176d3":"#fff",
+              border:done||isCur?"none":"2px solid #c2cddb",
+              color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:".72rem",fontWeight:700}}>
+              {done?"✓":i+1}</div>
+            {i<stages.length-1 && <div style={{width:2,height:14,background:done?"#2e844a":"#cdd9e6"}}></div>}
+          </div>
+          <div style={{flex:1,padding:"8px 12px",borderRadius:8,
+            background:isCur?"#eef6ff":"#fff",border:"1px solid "+(isCur?"#bcdcf5":"#e3e8f0")}}>
+            <span style={{fontWeight:isCur?700:600,fontSize:".9rem"}}>{s}</span>
+            <span style={{float:"right",fontSize:".72rem",fontWeight:700,
+              color:done?"#256a3a":isCur?"#0176d3":"#8a94a6"}}>
+              {done?"Complete":isCur?"In Progress":"Pending"}</span>
+          </div>
+        </div>);
+      })}
+    </div>
+    <button className="slds-button slds-button_brand slds-button_stretch" style={{marginTop:10}}
+      onClick={()=>setCur(c=>Math.min(c+1,stages.length))}>
+      Mark "{stages[Math.min(cur,stages.length-1)]}" complete
+    </button>
+  </div>);
+}
+
+function ScreenParts(){
+  const [checked,setChecked]=useState({});
+  const parts=[
+    {n:"Compressor seal",sn:"SN 54821",stock:"In stock",c:"success"},
+    {n:"O-ring kit",sn:"SN 12045",stock:"In stock",c:"success"},
+    {n:"Refrigerant R-290 (0.5kg)",sn:"SN 88210",stock:"Low — 1 unit",c:"warning"}
+  ];
+  const toggle=n=>setChecked(p=>({...p,[n]:!p[n]}));
+  return(<div className="scroll">
+    <div style={{fontWeight:700,fontSize:".95rem",marginBottom:4}}>Parts Required (3)</div>
+    <div style={{fontSize:".78rem",color:"#5c6b80",marginBottom:12}}>Confirm part & serial, then check off as used.</div>
+    {parts.map(p=>(
+      <div key={p.n} onClick={()=>toggle(p.n)} style={{background:"#fff",border:"1px solid #e3e8f0",borderRadius:10,padding:"12px 14px",marginBottom:10,display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+        <div style={{width:22,height:22,borderRadius:5,border:"2px solid "+(checked[p.n]?"#2e844a":"#c2cddb"),background:checked[p.n]?"#2e844a":"#fff",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:".75rem"}}>{checked[p.n]?"✓":""}</div>
+        <div style={{flex:1}}>
+          <div style={{fontWeight:600,fontSize:".88rem"}}>{p.n}</div>
+          <div style={{fontSize:".74rem",color:"#5c6b80"}}>{p.sn}</div>
+        </div>
+        <span className={"slds-badge slds-theme_"+p.c}>{p.stock}</span>
+      </div>))}
+    <div style={{background:"#eef6ff",borderRadius:8,padding:"10px 12px",fontSize:".78rem",color:"#16325c",marginTop:6}}>
+      <b>{Object.values(checked).filter(Boolean).length}/3</b> parts confirmed · usage will auto-update in inventory on sync.
+    </div>
+  </div>);
+}
+
+function ScreenCapture(){
+  const [signed,setSigned]=useState(false);
+  const [submitted,setSubmitted]=useState(false);
+  return(<div className="scroll">
+    <div style={{fontWeight:700,fontSize:".95rem",marginBottom:4}}>Complete & Document — WO-100482</div>
+    <div style={{fontSize:".78rem",color:"#5c6b80",marginBottom:14}}>Capture proof of work before submitting.</div>
+
+    <div style={{fontSize:".75rem",fontWeight:700,color:"#5c6b80",marginBottom:6}}>BEFORE / AFTER PHOTOS</div>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:16}}>
+      <div className="photo-thumb">📷</div>
+      <div className="photo-thumb">📷</div>
+      <div className="photo-thumb" style={{border:"2px dashed #c2cddb",color:"#0176d3"}}>＋</div>
+    </div>
+
+    <div style={{fontSize:".75rem",fontWeight:700,color:"#5c6b80",marginBottom:6}}>SERVICE NOTES</div>
+    <textarea className="slds-textarea" rows="2" style={{marginBottom:16,fontSize:".85rem"}}
+      defaultValue="Replaced compressor seal & O-ring kit. Recharged R-290. Unit holding 3°C, fault E-04 cleared."></textarea>
+
+    <div style={{fontSize:".75rem",fontWeight:700,color:"#5c6b80",marginBottom:6}}>CUSTOMER SIGNATURE</div>
+    <div className="sig-pad" onClick={()=>setSigned(true)}>
+      {signed
+        ? <svg viewBox="0 0 300 150"><path d="M20 110 q30 -60 55 0 t55 -20 q30 50 60 -10 t70 5" fill="none" stroke="#16325c" strokeWidth="3"/></svg>
+        : <span style={{position:"absolute",top:"42%",color:"#9fb0c4",fontSize:".82rem"}}>Tap to sign</span>}
+    </div>
+    <div style={{fontSize:".74rem",color:"#5c6b80",margin:"6px 2px 16px"}}>Signed by: M. van Dijk, Café De Klok · {new Date().toLocaleDateString('en-GB')}</div>
+
+    {submitted
+      ? <div className="slds-box slds-theme_success" style={{textAlign:"center",fontWeight:600}}>✓ Work order submitted & queued for sync</div>
+      : <button className="slds-button slds-button_brand slds-button_stretch" disabled={!signed}
+          style={{opacity:signed?1:.5}} onClick={()=>setSubmitted(true)}>Submit Work Order</button>}
+  </div>);
+}
+
+function Phone({screenId}){
+  const offline = screenId==="steps" || screenId==="capture";
+  const body = {
+    daily:<ScreenDaily/>, asset:<ScreenAsset/>, steps:<ScreenSteps/>,
+    parts:<ScreenParts/>, capture:<ScreenCapture/>
+  }[screenId];
+  const title={daily:"All Service Appointments",asset:"Asset Details",steps:"Guided Work Steps",parts:"Parts & Inventory",capture:"Submit Work"}[screenId];
+  return(
+    <div className="phone">
+      <div className="phone-notch"><span></span></div>
+      <div className="screen">
+        <StatusBar/>
+        <div className="appbar"><span className="back">‹</span><span>{title}</span></div>
+        <div className={"sync"+(offline?"":" online")}>
+          <span className="dot"></span>
+          {offline?"Offline · 4 actions queued for sync":"Synced · all changes saved"}
+        </div>
+        {body}
+        <TabBar active={screenId==="parts"?1:0}/>
+      </div>
+    </div>);
+}
+
+function Prototype(){
+  const [active,setActive]=useState("daily");
+  const sc=SCREENS.find(s=>s.id===active);
+  return(
+    <div>
+      <div className="seg">
+        {SCREENS.map(s=>(
+          <button key={s.id} className={active===s.id?"active":""} onClick={()=>setActive(s.id)}>{s.title}</button>))}
+      </div>
+      <div className="stage">
+        <Phone screenId={active}/>
+        <div className="coachmark">
+          <div className="step-label">{sc.step}</div>
+          <h4>{sc.heading}</h4>
+          <p>{sc.narr}</p>
+        </div>
+      </div>
+    </div>);
+}
+
+ReactDOM.createRoot(document.getElementById("proto-root")).render(<Prototype/>);
+</script>
+</body>
+</html>
