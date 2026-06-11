@@ -9,426 +9,495 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
-  :root{ --sf-blue:#0176d3; --sf-blue-dark:#014486; --ink:#181818; --muted:#5c5c5c; --line:#e5e5e5; }
+  :root{
+    --sf-blue:#0176d3;
+    --sf-blue-dark:#032d60;
+    --ink:#181818;
+    --muted:#5c5c5c;
+    --line:#e5e5e5;
+    --bg:#f7f9fb;
+  }
   *{box-sizing:border-box;}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fafbfc;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;}
   .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
   /* HERO */
-  .hero{background:linear-gradient(135deg,#032d60 0%,#0176d3 55%,#0aa5e8 100%);color:#fff;padding:72px 0;}
-  .hero .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:600;opacity:.85;margin:0 0 16px;}
-  .hero h1{font-size:2.7rem;line-height:1.12;margin:0 0 18px;font-weight:700;max-width:760px;}
-  .hero h1 em{font-style:italic;color:#bfe3ff;}
-  .hero p{font-size:1.12rem;line-height:1.55;max-width:620px;opacity:.94;margin:0;}
+  .hero{
+    background:linear-gradient(120deg,#032d60 0%,#0176d3 60%,#1b96ff 100%);
+    color:#fff;padding:72px 0 76px;
+  }
+  .hero .wrap{max-width:1100px;}
+  .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:600;opacity:.85;margin:0 0 18px;}
+  .hero h1{font-size:2.9rem;line-height:1.08;margin:0 0 18px;font-weight:700;max-width:720px;}
+  .hero h1 em{font-style:italic;color:#a5d8ff;}
+  .hero p{font-size:1.15rem;line-height:1.5;max-width:620px;margin:0;opacity:.94;}
   /* SECTIONS */
-  section{padding:56px 0;}
-  .sec-h{font-size:1.7rem;font-weight:700;margin:0 0 6px;}
-  .sec-sub{color:var(--muted);font-size:1rem;margin:0 0 32px;max-width:680px;}
-  /* VALUE DRIVERS */
+  section.block{padding:60px 0;}
+  section.block.alt{background:var(--bg);}
+  h2.section-title{font-size:1.7rem;font-weight:700;margin:0 0 8px;color:var(--sf-blue-dark);}
+  p.section-sub{font-size:1.02rem;color:var(--muted);margin:0 0 34px;max-width:660px;}
+  /* VALUE GRID */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
   .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
-  .card .ico{font-size:1.7rem;margin-bottom:10px;}
-  .card h3{font-size:1.08rem;margin:0 0 8px;font-weight:650;line-height:1.3;}
-  .card .metric{color:var(--sf-blue);font-weight:600;font-size:.88rem;margin:0 0 8px;}
-  .card p{color:var(--muted);font-size:.9rem;line-height:1.5;margin:0;}
-  /* PROTOTYPE */
-  .proto-wrap{background:#eef3f8;border-radius:16px;padding:32px;border:1px solid #dce6f0;}
-  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
-  .tab{border:1px solid #cdd9e5;background:#fff;color:var(--sf-blue-dark);padding:9px 16px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;}
-  .tab:hover{border-color:var(--sf-blue);}
-  .tab.active{background:var(--sf-blue);color:#fff;border-color:var(--sf-blue);}
-  .coach{display:flex;gap:12px;align-items:flex-start;background:#fff;border-left:4px solid var(--sf-blue);border-radius:8px;padding:14px 18px;margin-bottom:22px;box-shadow:0 1px 2px rgba(0,0,0,.05);}
-  .coach .dot{flex:none;width:26px;height:26px;border-radius:50%;background:var(--sf-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;}
-  .coach p{margin:0;font-size:.92rem;color:#3a3a3a;line-height:1.5;}
-  /* desktop frame */
-  .browser{background:#fff;border:1px solid #d4d4d4;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.10);}
-  .browser-bar{background:#f3f3f3;border-bottom:1px solid #e0e0e0;padding:10px 14px;display:flex;align-items:center;gap:8px;}
-  .browser-bar .d{width:11px;height:11px;border-radius:50%;}
-  .browser-bar .url{flex:1;margin-left:10px;background:#fff;border:1px solid #e0e0e0;border-radius:6px;font-size:.76rem;color:#888;padding:4px 12px;}
+  .card .ic{font-size:1.7rem;display:block;margin-bottom:12px;}
+  .card h3{font-size:1.12rem;margin:0 0 8px;font-weight:700;}
+  .card .metric{color:var(--sf-blue);font-weight:600;font-size:.92rem;margin:0 0 8px;}
+  .card p.supp{font-size:.92rem;color:var(--muted);margin:0;line-height:1.45;}
+  /* PAINS */
+  .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+  .pain{background:#fff;border:1px solid var(--line);border-left:4px solid #ba0517;border-radius:10px;padding:20px 22px;}
+  .pain h4{margin:0 0 8px;font-size:1.02rem;font-weight:700;}
+  .pain .impact{font-size:.9rem;color:var(--muted);margin:0 0 10px;line-height:1.45;}
+  .pain .work{font-size:.82rem;color:#8a6d00;background:#fff7e0;border-radius:6px;padding:6px 10px;display:inline-block;}
+  /* PROTOTYPE captions */
+  .coach{background:#eef6fd;border:1px solid #cfe7fb;border-radius:10px;padding:14px 18px;font-size:.93rem;color:#032d60;line-height:1.5;margin-bottom:20px;}
+  .coach strong{color:var(--sf-blue-dark);}
+  /* tab strip for prototype nav */
+  .demo-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+  .demo-tab{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:24px;padding:9px 18px;font-size:.88rem;font-weight:600;cursor:pointer;transition:.15s;}
+  .demo-tab.active{background:var(--sf-blue);color:#fff;border-color:var(--sf-blue);}
   /* phone */
-  .phone{width:390px;margin:0 auto;background:#0d0d0d;border-radius:42px;padding:12px;box-shadow:0 16px 44px rgba(0,0,0,.28);}
-  .phone-screen{background:#fff;border-radius:32px;overflow:hidden;height:720px;display:flex;flex-direction:column;position:relative;}
-  .phone-status{display:flex;justify-content:space-between;padding:10px 24px 4px;font-size:.78rem;font-weight:600;flex:none;}
-  .phone-body{flex:1;overflow-y:auto;}
-  .phone-tabbar{flex:none;border-top:1px solid #e5e5e5;display:flex;background:#fafafa;}
-  .phone-tabbar div{flex:1;text-align:center;padding:8px 2px 10px;font-size:.62rem;color:#888;}
-  .phone-tabbar div.on{color:var(--sf-blue);}
-  .phone-tabbar .ic{font-size:1.1rem;display:block;}
-  .appbar{background:var(--sf-blue);color:#fff;padding:14px 18px;}
-  .appbar .small{font-size:.7rem;opacity:.85;text-transform:uppercase;letter-spacing:.05em;}
-  .appbar .big{font-size:1.05rem;font-weight:650;margin-top:2px;}
-  .map-fake{height:150px;background:linear-gradient(135deg,#cfe3d4,#bcd6e8);position:relative;}
-  .pin{position:absolute;width:16px;height:16px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 1px 3px rgba(0,0,0,.3);}
-  /* WHAT WE HEARD */
-  .pain{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
-  .pain h4{margin:0 0 8px;font-size:1rem;font-weight:650;}
-  .pain .imp{color:#ba0517;font-size:.84rem;font-weight:600;margin:0 0 6px;}
-  .pain p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.5;}
-  /* FOOTER */
-  footer{background:#032d60;color:#bcd3ea;padding:30px 0;font-size:.84rem;text-align:center;}
-  footer strong{color:#fff;}
-  .desktop-map{height:230px;background:linear-gradient(135deg,#cfe3d4,#b6d2e6);position:relative;border-radius:8px;overflow:hidden;}
-  @media(max-width:430px){.phone{width:100%;}}
+  .phone-wrap{display:flex;justify-content:center;}
+  .phone{width:390px;max-width:100%;background:#000;border-radius:42px;padding:12px;box-shadow:0 18px 50px rgba(3,45,96,.28);}
+  .phone-inner{background:#fff;border-radius:32px;overflow:hidden;height:720px;display:flex;flex-direction:column;}
+  .statusbar{background:#000;color:#fff;font-size:.75rem;display:flex;justify-content:space-between;padding:8px 22px 6px;font-weight:600;}
+  .app-scroll{flex:1;overflow-y:auto;background:#fafafa;}
+  .m-appbar{background:#0176d3;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;}
+  .m-appbar .x{font-size:1.3rem;line-height:1;cursor:pointer;}
+  .m-appbar .lbl{font-size:.7rem;letter-spacing:.08em;opacity:.85;text-transform:uppercase;}
+  .m-appbar .ttl{font-size:1rem;font-weight:700;}
+  .tabbar{display:flex;border-top:1px solid var(--line);background:#fff;}
+  .tabbar .t{flex:1;text-align:center;padding:9px 0 7px;font-size:.6rem;color:var(--muted);}
+  .tabbar .t.active{color:var(--sf-blue);}
+  .tabbar .t .ti{font-size:1.1rem;display:block;}
+  .sec-h{font-weight:700;font-size:.95rem;margin:0 0 6px;color:#181818;}
+  .m-section{background:#fff;margin:10px;border-radius:10px;padding:14px 16px;border:1px solid #eee;}
+  .m-tabs{display:flex;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto;}
+  .m-tabs .mt{padding:11px 14px;font-size:.8rem;color:var(--muted);white-space:nowrap;font-weight:600;border-bottom:2px solid transparent;}
+  .m-tabs .mt.active{color:var(--sf-blue);border-bottom-color:var(--sf-blue);}
+  .primary-bar{padding:12px;background:#fff;border-top:1px solid var(--line);}
+  /* desktop browser frame */
+  .browser{border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 14px 40px rgba(3,45,96,.14);background:#fff;}
+  .browser .titlebar{background:#f3f3f3;border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:7px;}
+  .dot{width:11px;height:11px;border-radius:50%;}
+  .dot.r{background:#ff5f57;}.dot.y{background:#febc2e;}.dot.g{background:#28c840;}
+  .browser .urlbar{flex:1;background:#fff;border:1px solid var(--line);border-radius:6px;font-size:.78rem;color:var(--muted);padding:5px 12px;margin-left:10px;}
+  /* dispatcher console */
+  .lt-nav{background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:18px;padding:8px 16px;font-size:.82rem;}
+  .lt-nav .logo{width:22px;height:22px;background:#0176d3;border-radius:5px;}
+  .lt-nav b{color:#032d60;}
+  .lt-nav a{color:#3e3e3c;text-decoration:none;}
+  .lt-nav a.cur{color:#0176d3;font-weight:600;border-bottom:2px solid #0176d3;padding-bottom:6px;}
+  .console-head{background:#fafaf9;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;}
+  .console-head h3{margin:0;font-size:1.05rem;color:#032d60;}
+  .console-body{display:grid;grid-template-columns:230px 1fr 280px;height:430px;}
+  .res-list{border-right:1px solid var(--line);overflow-y:auto;}
+  .res-row{display:flex;gap:9px;align-items:center;padding:10px 12px;border-bottom:1px solid #f0f0f0;font-size:.8rem;cursor:pointer;}
+  .res-row:hover{background:#f3f9ff;}
+  .avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.75rem;}
+  .gantt{overflow:auto;background:#fff;}
+  .gantt-axis{display:flex;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fafaf9;}
+  .gantt-axis .h{flex:1;min-width:70px;text-align:center;font-size:.68rem;color:var(--muted);padding:6px 0;border-left:1px solid #f0f0f0;}
+  .gantt-row{display:flex;border-bottom:1px solid #f4f4f4;height:48px;position:relative;align-items:center;}
+  .blk{position:absolute;height:30px;border-radius:5px;font-size:.62rem;color:#fff;padding:3px 6px;overflow:hidden;white-space:nowrap;font-weight:600;display:flex;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.15);}
+  .map{border-left:1px solid var(--line);background:linear-gradient(135deg,#dbe9f4 0%,#cfe0ee 100%);position:relative;}
+  .pin{position:absolute;width:18px;height:18px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);}
+  .queue{border-top:1px solid var(--line);padding:0;}
+  footer.foot{background:#032d60;color:#b6cbe4;padding:30px 0;font-size:.85rem;}
+  footer.foot .wrap{display:flex;flex-direction:column;gap:6px;}
+  footer.foot b{color:#fff;}
+  @media(max-width:760px){
+    .hero h1{font-size:2.1rem;}
+    .console-body{grid-template-columns:1fr;height:auto;}
+    .map{height:180px;}
+    .res-list{max-height:160px;}
+  }
 </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script type="text/babel">
-const {useState} = React;
-const SP = "https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system@2.24.4/assets/icons";
+const { useState } = React;
 
-function Badge({theme,children}){return <span className={"slds-badge "+(theme||"")}>{children}</span>;}
+const SPRITE_U = "https://cdn.jsdelivr.net/npm/@salesforce-ux/design-system@2.24.4/assets/icons/utility-sprite/svg/symbols.svg#";
 
-/* ---------------- Screen 1: Dispatcher Console ---------------- */
-function DispatcherConsole(){
-  const techs=[
-    {n:"Donald Visser",job:"WO-44821 · Compressor GA37",loc:"Eindhoven · Hightech Campus 3",eta:"On Site",next:"WO-44830",color:"#04844b",st:"On Site"},
-    {n:"Marit Bakker",job:"WO-44817 · Dryer FD18",loc:"Tilburg · Ringbaan Oost 210",eta:"12 min",next:"WO-44829",color:"#fe9339",st:"En Route"},
-    {n:"Kees de Jong",job:"—",loc:"Depot Breda",eta:"Available",next:"WO-44833",color:"#0176d3",st:"Available"},
-    {n:"Sanne Vermeer",job:"WO-44808 · Vacuum GHS900",loc:"Helmond · Steenweg 44",eta:"On Site",next:"WO-44835",color:"#04844b",st:"On Site"},
-    {n:"Joris Mulder",job:"WO-44812 · Compressor GA90",loc:"Den Bosch · Pettelaarpark 1",eta:"8 min",next:"WO-44841",color:"#fe9339",st:"En Route"},
-  ];
-  return(
-   <div className="slds-p-around_medium">
-     <div className="slds-grid slds-grid_align-spread slds-m-bottom_small slds-wrap">
-       <div className="slds-page-header__title slds-truncate" style={{fontSize:"1.05rem",fontWeight:700}}>Dispatcher Console · Territory Zuid-Nederland</div>
-       <div className="slds-grid" style={{gap:8}}>
-         <button className="slds-button slds-button_neutral slds-button_small">Optimize</button>
-         <button className="slds-button slds-button_brand slds-button_small">Schedule Next</button>
-       </div>
-     </div>
-     <div className="slds-grid slds-gutters slds-wrap">
-       <div className="slds-col slds-size_1-of-1 slds-large-size_7-of-12">
-         <div className="desktop-map">
-           {techs.map((t,i)=><span key={i} className="pin" style={{background:t.color,left:(15+i*17)+"%",top:(28+(i%3)*22)+"%"}}></span>)}
-           <span style={{position:"absolute",bottom:8,left:10,background:"rgba(255,255,255,.9)",borderRadius:6,padding:"4px 10px",fontSize:".72rem"}}>🟢 On Site &nbsp; 🟠 En Route &nbsp; 🔵 Available</span>
-         </div>
-         <table className="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small" style={{fontSize:".82rem"}}>
-           <thead><tr className="slds-line-height_reset slds-text-title_caps">
-             <th>Technician</th><th>Current Job</th><th>ETA</th><th>Next</th></tr></thead>
-           <tbody>
-             {techs.map((t,i)=>(<tr key={i} className="slds-hint-parent">
-               <td><span style={{display:"inline-block",width:9,height:9,borderRadius:"50%",background:t.color,marginRight:6}}></span>{t.n}</td>
-               <td className="slds-truncate" style={{maxWidth:200}}>{t.job}</td>
-               <td>{t.st==="Available"?<Badge theme="">Available</Badge>:t.st==="On Site"?<Badge theme="slds-theme_success">{t.eta}</Badge>:<Badge theme="slds-theme_warning">{t.eta}</Badge>}</td>
-               <td><a href="#">{t.next}</a></td>
-             </tr>))}
-           </tbody>
-         </table>
-       </div>
-       <div className="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
-         <article className="slds-card slds-m-top_x-small">
-           <div className="slds-card__header"><h2 className="slds-card__header-title">Priority Queue (3)</h2></div>
-           <div className="slds-card__body slds-card__body_inner">
-             {[["WO-44830","Compressor GA55 — no pressure","Veldhoven","High"],
-               ["WO-44829","Annual PM — Dryer FX7","Waalwijk","Medium"],
-               ["WO-44833","Vacuum leak diagnose","Oss","High"]].map((r,i)=>(
-               <div key={i} className="slds-box slds-box_x-small slds-m-bottom_x-small">
-                 <div className="slds-grid slds-grid_align-spread">
-                   <strong style={{fontSize:".86rem"}}>{r[0]}</strong>
-                   <Badge theme={r[3]==="High"?"slds-theme_error":""}>{r[3]}</Badge>
-                 </div>
-                 <div style={{fontSize:".82rem",color:"#444"}}>{r[1]}</div>
-                 <div style={{fontSize:".76rem",color:"#888"}}>📍 {r[2]}</div>
-               </div>))}
-           </div>
-         </article>
-       </div>
-     </div>
-   </div>
+function Icon({name,size="x-small",cls=""}){
+  return (
+    <svg className={`slds-icon slds-icon_${size} ${cls}`} aria-hidden="true">
+      <use xlinkHref={SPRITE_U+name}></use>
+    </svg>
   );
 }
 
-/* ---------------- Screen 2: Prework Brief (desktop) ---------------- */
-function PreworkBrief(){
-  return(
-   <div>
-     <div className="slds-page-header slds-page-header_record-home">
-       <div className="slds-page-header__row"><div className="slds-page-header__col-title"><div className="slds-media">
-         <div className="slds-media__figure"><span className="slds-icon_container slds-icon-standard-work-order">
-           <svg className="slds-icon slds-page-header__icon"><use xlinkHref={SP+"/standard-sprite/svg/symbols.svg#work_order"}></use></svg></span></div>
-         <div className="slds-media__body"><div className="slds-page-header__name"><div className="slds-page-header__name-title">
-           <h1><span className="slds-page-header__title-label">Work Order</span><span className="slds-page-header__title">WO-44830</span></h1></div></div>
-           <p className="slds-page-header__name-meta">Hightech Plastics BV · Veldhoven, De Run 4302 · Compressor GA55</p></div>
-       </div></div></div>
-       <div className="slds-page-header__row slds-page-header__row_gutters"><div className="slds-page-header__col-details">
-         <ul className="slds-page-header__detail-row">
-           <li className="slds-page-header__detail-block"><div className="slds-text-title">Status</div><p className="slds-page-header__detail"><Badge theme="slds-theme_warning">Dispatched</Badge></p></li>
-           <li className="slds-page-header__detail-block"><div className="slds-text-title">Priority</div><p className="slds-page-header__detail" style={{color:"#ba0517",fontWeight:600}}>High</p></li>
-           <li className="slds-page-header__detail-block"><div className="slds-text-title">Technician</div><p className="slds-page-header__detail"><a href="#">Donald Visser</a></p></li>
-           <li className="slds-page-header__detail-block"><div className="slds-text-title">Est. Duration</div><p className="slds-page-header__detail">2.5 hr</p></li>
-         </ul></div></div>
-     </div>
-     <div className="slds-grid slds-gutters slds-wrap slds-m-top_small slds-p-horizontal_small slds-p-bottom_small">
-       <div className="slds-col slds-size_1-of-1 slds-medium-size_5-of-12">
-         <article className="slds-card">
-           <div className="slds-card__header"><h2 className="slds-card__header-title">🔧 Asset Details</h2></div>
-           <div className="slds-card__body slds-card__body_inner">
-             <dl className="slds-list_horizontal slds-wrap" style={{fontSize:".85rem"}}>
-               <dt className="slds-item_label slds-text-color_weak" style={{width:"45%"}}>Model</dt><dd className="slds-item_detail" style={{width:"55%"}}>GA55 VSD+ Compressor</dd>
-               <dt className="slds-item_label slds-text-color_weak" style={{width:"45%"}}>Serial</dt><dd className="slds-item_detail" style={{width:"55%"}}>API-2019-GA55-30412</dd>
-               <dt className="slds-item_label slds-text-color_weak" style={{width:"45%"}}>Installed</dt><dd className="slds-item_detail" style={{width:"55%"}}>14 Mar 2019 (6 yr)</dd>
-               <dt className="slds-item_label slds-text-color_weak" style={{width:"45%"}}>Run hours</dt><dd className="slds-item_detail" style={{width:"55%"}}>38,420 h</dd>
-               <dt className="slds-item_label slds-text-color_weak" style={{width:"45%"}}>Contract</dt><dd className="slds-item_detail" style={{width:"55%"}}>Total Responsibility Plan</dd>
-             </dl>
-           </div>
-           <div className="slds-card__header slds-m-top_x-small"><h2 className="slds-card__header-title">⚠️ Known Issues</h2></div>
-           <div className="slds-card__body slds-card__body_inner">
-             <ul style={{fontSize:".84rem",lineHeight:1.6,paddingLeft:18}}>
-               <li>Pressure drop reported below 7.0 bar</li>
-               <li>Intermittent VSD fault code E-44 last visit</li>
-             </ul>
-           </div>
-         </article>
-       </div>
-       <div className="slds-col slds-size_1-of-1 slds-medium-size_7-of-12">
-         <article className="slds-card">
-           <div className="slds-card__header"><h2 className="slds-card__header-title">Maintenance History</h2></div>
-           <div className="slds-card__body slds-p-around_none">
-             <table className="slds-table slds-table_bordered slds-table_cell-buffer" style={{fontSize:".82rem"}}>
-               <thead><tr className="slds-line-height_reset slds-text-title_caps"><th>Date</th><th>Service</th><th>Technician</th><th>Outcome</th></tr></thead>
-               <tbody>
-                 <tr className="slds-hint-parent"><td>09 Jan 2025</td><td>Annual PM + oil change</td><td>M. Bakker</td><td><Badge theme="slds-theme_success">Closed</Badge></td></tr>
-                 <tr className="slds-hint-parent"><td>22 Aug 2024</td><td>VSD board inspection</td><td>D. Visser</td><td><Badge theme="slds-theme_warning">Follow-up</Badge></td></tr>
-                 <tr className="slds-hint-parent"><td>03 Feb 2024</td><td>Air filter + separator</td><td>K. de Jong</td><td><Badge theme="slds-theme_success">Closed</Badge></td></tr>
-               </tbody>
-             </table>
-           </div>
-           <div className="slds-card__header slds-m-top_x-small"><h2 className="slds-card__header-title">Job Scope Checklist</h2></div>
-           <div className="slds-card__body slds-card__body_inner">
-             {["Diagnose pressure loss cause","Inspect & replace air/oil separator","Clear VSD fault code E-44 and re-test","Verify output pressure ≥ 7.5 bar"].map((c,i)=>(
-               <div key={i} className="slds-checkbox slds-m-bottom_xx-small"><input type="checkbox" id={"c"+i} defaultChecked={i===0}/><label className="slds-checkbox__label" htmlFor={"c"+i}><span className="slds-checkbox_faux"></span><span className="slds-form-element__label" style={{fontSize:".85rem"}}>{c}</span></label></div>
-             ))}
-           </div>
-         </article>
-       </div>
-     </div>
-   </div>
-  );
-}
-
-/* ---------------- Screen 3: Parts Staging (desktop) ---------------- */
-function PartsStaging(){
-  const parts=[
-    ["AC-3001-SEP","Air/Oil Separator GA55",1,"In Stock",14,"Breda · A-12","Yes"],
-    ["AC-7740-FLT","Air Filter Element",2,"In Stock",38,"Breda · B-04","Yes"],
-    ["AC-VSD-0044","VSD Control Board","1","On Order",0,"— ETA 13 Feb","No"],
-    ["AC-OIL-20L","Roto-Xtend Oil 20L",1,"In Stock",9,"Breda · C-22","Yes"],
-  ];
-  return(
-   <div className="slds-p-around_medium">
-     <div className="slds-grid slds-grid_align-spread slds-m-bottom_small slds-wrap">
-       <div><strong style={{fontSize:"1.05rem"}}>Parts Planning & Staging</strong><div style={{fontSize:".82rem",color:"#888"}}>WO-44830 · Compressor GA55 · Depot Breda</div></div>
-       <button className="slds-button slds-button_brand slds-button_small">Stage Kit for Dispatch</button>
-     </div>
-     <div className="slds-grid slds-gutters slds-m-bottom_small">
-       <div className="slds-col"><div className="slds-box slds-box_x-small slds-text-align_center"><div style={{fontSize:".72rem",color:"#888"}}>PARTS REQUIRED</div><div style={{fontSize:"1.4rem",fontWeight:700}}>4</div></div></div>
-       <div className="slds-col"><div className="slds-box slds-box_x-small slds-text-align_center"><div style={{fontSize:".72rem",color:"#888"}}>IN STOCK</div><div style={{fontSize:"1.4rem",fontWeight:700,color:"#04844b"}}>3</div></div></div>
-       <div className="slds-col"><div className="slds-box slds-box_x-small slds-text-align_center"><div style={{fontSize:".72rem",color:"#888"}}>ON ORDER</div><div style={{fontSize:"1.4rem",fontWeight:700,color:"#fe9339"}}>1</div></div></div>
-       <div className="slds-col"><div className="slds-box slds-box_x-small slds-text-align_center"><div style={{fontSize:".72rem",color:"#888"}}>KIT READINESS</div><div style={{fontSize:"1.4rem",fontWeight:700,color:"#0176d3"}}>75%</div></div></div>
-     </div>
-     <table className="slds-table slds-table_bordered slds-table_cell-buffer" style={{fontSize:".84rem"}}>
-       <thead><tr className="slds-line-height_reset slds-text-title_caps">
-         <th>Part #</th><th>Description</th><th>Qty</th><th>Status</th><th>Stock</th><th>Bin</th><th>Staged</th></tr></thead>
-       <tbody>
-         {parts.map((p,i)=>(<tr key={i} className="slds-hint-parent">
-           <td><a href="#">{p[0]}</a></td><td className="slds-truncate" style={{maxWidth:200}}>{p[1]}</td><td>{p[2]}</td>
-           <td>{p[3]==="In Stock"?<Badge theme="slds-theme_success">In Stock</Badge>:<Badge theme="slds-theme_warning">On Order</Badge>}</td>
-           <td>{p[4]}</td><td style={{fontSize:".78rem",color:"#666"}}>{p[5]}</td>
-           <td>{p[6]==="Yes"?<Badge theme="slds-theme_success">✓ Staged</Badge>:<Badge theme="slds-theme_error">Pending</Badge>}</td>
-         </tr>))}
-       </tbody>
-     </table>
-     <div className="slds-box slds-box_x-small slds-m-top_small slds-theme_warning" style={{fontSize:".84rem"}}>
-       ⚠️ VSD Control Board (AC-VSD-0044) on back-order — ETA 13 Feb. Recommend dispatching diagnostic-only visit or substituting from Eindhoven depot (1 in stock).
-     </div>
-   </div>
-  );
-}
-
-/* ---------------- Phone wrapper ---------------- */
-function Phone({children,active}){
-  return(
-    <div className="phone"><div className="phone-screen">
-      <div className="phone-status"><span>9:41</span><span>✈ 100% 🔋</span></div>
-      <div className="phone-body">{children}</div>
-      <div className="phone-tabbar">
-        {[["📅","Schedule"],["📦","Inventory"],["📊","Dashboard"],["🔔","Alerts"],["👤","Profile"]].map((t,i)=>(
-          <div key={i} className={i===0?"on":""}><span className="ic">{t[0]}</span>{t[1]}</div>))}
+/* ---------- HERO ---------- */
+function Hero(){
+  return (
+    <div className="hero">
+      <div className="wrap">
+        <p className="eyebrow">Atlas Copco · Field Service</p>
+        <h1>Arrive prepared. <em>Resolve faster.</em></h1>
+        <p>Give every technician a complete job brief before they drive, and give dispatchers live visibility of the field — so the first visit is the only visit.</p>
       </div>
-    </div></div>
+    </div>
   );
 }
 
-/* ---------------- Screen 4: Technician Mobile Brief ---------------- */
-function MobileBrief(){
-  return(
-   <Phone>
-     <div className="appbar"><div className="small">Work Order · 000044830 · PM</div><div className="big">Compressor GA55 — Pressure Loss</div></div>
-     <div className="map-fake"><span className="pin" style={{background:"#0176d3",left:"46%",top:"40%"}}></span>
-       <button style={{position:"absolute",bottom:10,left:"50%",transform:"translateX(-50%)",border:"1px solid #0176d3",background:"#fff",color:"#0176d3",borderRadius:8,padding:"6px 16px",fontSize:".8rem",fontWeight:600}}>📍 Show Route</button></div>
-     <div style={{padding:"14px 16px"}}>
-       <div style={{fontWeight:700,fontSize:".95rem"}}>Hightech Plastics BV</div>
-       <div style={{fontSize:".8rem",color:"#666",marginBottom:12}}>De Run 4302, Veldhoven · Contact: Erik Smit</div>
-
-       <div style={{fontWeight:650,fontSize:".82rem",color:"#0176d3",margin:"4px 0"}}>OVERVIEW</div>
-       <p style={{fontSize:".83rem",lineHeight:1.5,margin:"0 0 12px",color:"#333"}}>Customer reports pressure dropping below 7.0 bar with intermittent VSD fault E-44. Asset is 6 yr / 38,420 run hours under Total Responsibility Plan. Last separator replaced Feb 2024.</p>
-
-       <div style={{fontWeight:650,fontSize:".82rem",color:"#0176d3",margin:"4px 0"}}>ASSET PHOTOS</div>
-       <div style={{display:"flex",gap:6,marginBottom:14}}>
-         {["#b9c8d4","#cfd9c4","#d4c9b9"].map((c,i)=><div key={i} style={{flex:1,height:54,background:c,borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.2rem"}}>🖼️</div>)}
-       </div>
-
-       <div style={{fontWeight:650,fontSize:".82rem",color:"#0176d3",margin:"4px 0"}}>JOB CHECKLIST</div>
-       {["Diagnose pressure loss cause","Replace air/oil separator (AC-3001-SEP)","Clear VSD fault E-44 & re-test","Verify output ≥ 7.5 bar"].map((c,i)=>(
-         <div key={i} className="slds-checkbox slds-m-bottom_xx-small"><input type="checkbox" id={"m"+i}/><label className="slds-checkbox__label" htmlFor={"m"+i}><span className="slds-checkbox_faux"></span><span className="slds-form-element__label" style={{fontSize:".82rem"}}>{c}</span></label></div>
-       ))}
-
-       <div style={{fontWeight:650,fontSize:".82rem",color:"#0176d3",margin:"12px 0 6px"}}>PARTS KIT — PACKED ✓</div>
-       <table className="slds-table slds-table_bordered" style={{fontSize:".78rem"}}>
-         <thead><tr className="slds-line-height_reset"><th>Part</th><th>Qty</th></tr></thead>
-         <tbody>
-           <tr><td>Air/Oil Separator</td><td>1</td></tr>
-           <tr><td>Air Filter Element</td><td>2</td></tr>
-           <tr><td>Roto-Xtend Oil 20L</td><td>1</td></tr>
-         </tbody>
-       </table>
-       <div style={{background:"#f3f6fa",borderRadius:8,padding:"10px 12px",margin:"12px 0 4px",fontSize:".8rem",color:"#444"}}>
-         💬 <strong>Note from last visit (D. Visser):</strong> VSD enclosure latch sticks — bring T25 driver.</div>
-       <button className="slds-button slds-button_brand" style={{width:"100%",marginTop:12,padding:"10px"}}>Start Travel</button>
-     </div>
-   </Phone>
+/* ---------- VALUE DRIVERS ---------- */
+const drivers = [
+  {ic:"🔧",t:"Fewer repeat visits",m:"↑ First-time fix rate",s:"Asset history and required parts in hand before the technician leaves the depot."},
+  {ic:"📍",t:"Responsive dispatching",m:"↓ Job completion time · ↑ utilization",s:"Live technician location and status lets dispatchers reassign on the fly."},
+  {ic:"⚡",t:"More jobs per day",m:"↑ Jobs/day · ↓ avg job duration",s:"Less guesswork on site means technicians spend time fixing, not searching."},
+];
+function ValueDrivers(){
+  return (
+    <section className="block">
+      <div className="wrap">
+        <h2 className="section-title">Why it matters</h2>
+        <p className="section-sub">Three outcomes that turn field execution into a competitive advantage for Atlas Copco service teams.</p>
+        <div className="grid">
+          {drivers.map((d,i)=>(
+            <div className="card" key={i}>
+              <span className="ic">{d.ic}</span>
+              <h3>{d.t}</h3>
+              <p className="metric">{d.m}</p>
+              <p className="supp">{d.s}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-/* ---------------- Screen 5: Job Completion ---------------- */
+/* ---------- PROTOTYPE: Screen 1 — Prework Brief (mobile) ---------- */
+function PreworkBrief(){
+  const [tab,setTab]=useState("Overview");
+  const tabs=["Overview","Parts","History","Details"];
+  return (
+    <div className="phone">
+      <div className="phone-inner">
+        <div className="statusbar"><span>9:41</span><span>✈ 100% ▮</span></div>
+        <div className="m-appbar" style={{background:"#9e2146"}}>
+          <span className="x">‹</span>
+          <div>
+            <div className="lbl">Work Order · 00045821 · PM</div>
+            <div className="ttl">Compressor Maintenance</div>
+          </div>
+        </div>
+        <div className="m-tabs">
+          {tabs.map(t=>(
+            <div key={t} className={"mt"+(tab===t?" active":"")} onClick={()=>setTab(t)}>{t}</div>
+          ))}
+        </div>
+        <div className="app-scroll">
+          {tab==="Overview" && <>
+            <div className="m-section">
+              <p className="sec-h">Atlas Copco ZE 37 VSD</p>
+              <p style={{margin:"0 0 4px",fontSize:".82rem",color:"#5c5c5c"}}>Today's job is critical, please read carefully.</p>
+              <p className="sec-h" style={{marginTop:12}}>Overview</p>
+              <p style={{margin:0,fontSize:".82rem",lineHeight:1.5}}>You are scheduled at <b>Hoffman Manufacturing, Eindhoven</b> today at 10:00 AM for a scheduled annual Preventive Maintenance on the rotary screw compressor.</p>
+              <p className="sec-h" style={{marginTop:12}}>Perform Work</p>
+              <p style={{margin:0,fontSize:".82rem",lineHeight:1.5}}>Standard PM under the "Full Coverage – PM" service contract. Follow the maintenance checklist, run diagnostics, and verify operating pressure before sign-off.</p>
+              <div style={{background:"#fff7e0",borderRadius:8,padding:"10px 12px",marginTop:12,fontSize:".8rem",color:"#8a6d00"}}>
+                <b>⚠ Customer note:</b> "Unit making unusual noise — check bearing."
+              </div>
+            </div>
+            <div className="primary-bar">
+              <button className="slds-button slds-button_outline-brand slds-button_stretch">
+                <Icon name="volume_high" cls="slds-button__icon slds-button__icon_left"/> Read Aloud
+              </button>
+            </div>
+          </>}
+          {tab==="Parts" && <div className="m-section">
+            <p className="sec-h">Parts Breakdown</p>
+            <table className="slds-table slds-table_bordered slds-table_cell-buffer" style={{fontSize:".8rem"}}>
+              <thead><tr><th>Part</th><th style={{width:70}}>Qty</th></tr></thead>
+              <tbody>
+                <tr><td>Valve seal kit (1623-077)</td><td>2</td></tr>
+                <tr><td>Air filter element (2914-501)</td><td>1</td></tr>
+                <tr><td>Belt tension gauge</td><td>1</td></tr>
+              </tbody>
+            </table>
+            <p style={{fontSize:".76rem",color:"#5c5c5c",margin:"8px 0 0"}}>All parts confirmed in van stock ✓</p>
+          </div>}
+          {tab==="History" && <div className="m-section">
+            <p className="sec-h">Service History</p>
+            <ul className="slds-timeline" style={{fontSize:".82rem"}}>
+              <li style={{paddingBottom:14,borderLeft:"2px solid #0176d3",paddingLeft:12,marginLeft:4}}>
+                <b>6 months ago</b> — Replaced valve seal. Unit returned to service, no faults.
+              </li>
+              <li style={{paddingBottom:14,borderLeft:"2px solid #c9c9c9",paddingLeft:12,marginLeft:4}}>
+                <b>14 months ago</b> — Annual PM. Filter + oil change. Pressure within spec.
+              </li>
+              <li style={{borderLeft:"2px solid #c9c9c9",paddingLeft:12,marginLeft:4}}>
+                <b>2 yrs ago</b> — Commissioned. Baseline diagnostics recorded.
+              </li>
+            </ul>
+          </div>}
+          {tab==="Details" && <div className="m-section">
+            <p className="sec-h">Asset & Site</p>
+            <dl style={{fontSize:".82rem",margin:0}}>
+              <dt style={{color:"#5c5c5c"}}>Asset</dt><dd style={{margin:"0 0 8px",fontWeight:600}}>ZE 37 VSD · Serial 31141</dd>
+              <dt style={{color:"#5c5c5c"}}>Customer</dt><dd style={{margin:"0 0 8px",fontWeight:600}}>Hoffman Manufacturing</dd>
+              <dt style={{color:"#5c5c5c"}}>Site contact</dt><dd style={{margin:"0 0 8px",fontWeight:600}}>Jan Smith · +31 6 2244 1180</dd>
+              <dt style={{color:"#5c5c5c"}}>Address</dt><dd style={{margin:0,fontWeight:600}}>Esp 240, 5633 AC Eindhoven</dd>
+            </dl>
+          </div>}
+        </div>
+        <div className="tabbar">
+          <div className="t active"><span className="ti">📅</span>Schedule</div>
+          <div className="t"><span className="ti">📦</span>Inventory</div>
+          <div className="t"><span className="ti">🔔</span>Notifications</div>
+          <div className="t"><span className="ti">👤</span>Profile</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- PROTOTYPE: Screen 2 — Dispatcher Console (desktop) ---------- */
+function DispatcherConsole(){
+  const resources=[
+    {n:"John Pieters",r:"Compressor Specialist",c:"#1b96ff",init:"JP",booked:"En route",blocks:[{l:"SA-1180 / Hoffman PM",s:18,w:30,c:"#04844b"}]},
+    {n:"Maria Lopez",r:"HVAC / Air Systems",c:"#fe9339",init:"ML",booked:"In progress",blocks:[{l:"SA-1210 / Verbeek Repair",s:30,w:38,c:"#fe9339"}]},
+    {n:"Ahmed Hassan",r:"Field Service Engineer",c:"#04844b",init:"AH",booked:"Available",blocks:[]},
+    {n:"Lena Visser",r:"Diagnostics Lead",c:"#0176d3",init:"LV",booked:"In progress",blocks:[{l:"SA-1234 / Compressor Cal",s:12,w:26,c:"#04844b"},{l:"SA-1290 / Site Survey",s:55,w:22,c:"#ba0517"}]},
+    {n:"Tom de Wit",r:"Apprentice (50%)",c:"#9050e9",init:"TW",booked:"Allocated",blocks:[{l:"SA-1311 / Filter Swap",s:40,w:18,c:"#04844b"}]},
+  ];
+  const hours=["6AM","7AM","8AM","9AM","10AM","11AM","12PM","1PM","2PM"];
+  return (
+    <div className="browser">
+      <div className="titlebar">
+        <span className="dot r"></span><span className="dot y"></span><span className="dot g"></span>
+        <span className="urlbar">https://atlascopco.lightning.force.com/lightning/n/Scheduling_Console</span>
+      </div>
+      <div className="lt-nav">
+        <span className="logo"></span>
+        <b>Field Service</b>
+        <a href="#">Home</a>
+        <a href="#" className="cur">Scheduling Console</a>
+        <a href="#">Work Orders</a>
+        <a href="#">Service Appointments</a>
+        <a href="#">Service Resources</a>
+      </div>
+      <div className="console-head">
+        <h3>⚡ Scheduling Console</h3>
+        <div>
+          <button className="slds-button slds-button_neutral slds-button_small">Today</button>
+          <button className="slds-button slds-button_brand slds-button_small">Optimize ▾</button>
+        </div>
+      </div>
+      <div className="console-body">
+        {/* resources */}
+        <div className="res-list">
+          <div style={{padding:"8px 12px",fontSize:".72rem",color:"#5c5c5c",fontWeight:600,borderBottom:"1px solid #eee"}}>Eindhoven · Resources (5)</div>
+          {resources.map((r,i)=>(
+            <div className="res-row" key={i}>
+              <div className="avatar" style={{background:r.c}}>{r.init}</div>
+              <div style={{overflow:"hidden"}}>
+                <div style={{fontWeight:600,whiteSpace:"nowrap"}}>{r.n}</div>
+                <div style={{fontSize:".7rem",color:"#5c5c5c",whiteSpace:"nowrap"}}>{r.r} · {r.booked}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* gantt */}
+        <div className="gantt">
+          <div className="gantt-axis">
+            {hours.map(h=><div className="h" key={h}>{h}</div>)}
+          </div>
+          {resources.map((r,i)=>(
+            <div className="gantt-row" key={i}>
+              {r.blocks.map((b,j)=>(
+                <div className="blk" key={j} style={{left:b.s+"%",width:b.w+"%",background:b.c}}>{b.l}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+        {/* map */}
+        <div className="map">
+          <div style={{position:"absolute",top:10,left:12,fontSize:".72rem",color:"#3a5a78",fontWeight:600}}>Eindhoven region</div>
+          <div className="pin" style={{top:"30%",left:"40%",background:"#1b96ff"}}></div>
+          <div className="pin" style={{top:"55%",left:"60%",background:"#fe9339"}}></div>
+          <div className="pin" style={{top:"45%",left:"25%",background:"#04844b"}}></div>
+          <div className="pin" style={{top:"68%",left:"38%",background:"#0176d3"}}></div>
+          <div className="pin" style={{top:"22%",left:"68%",background:"#9050e9"}}></div>
+          <div style={{position:"absolute",bottom:10,left:12,right:12,background:"rgba(255,255,255,.92)",borderRadius:8,padding:"8px 10px",fontSize:".7rem"}}>
+            <b style={{color:"#04844b"}}>● Ahmed Hassan</b> — available, 4.2 km from incoming priority job.
+          </div>
+        </div>
+      </div>
+      {/* queue */}
+      <div className="queue">
+        <div style={{padding:"8px 16px",fontSize:".78rem",fontWeight:600,color:"#032d60",background:"#fafaf9",borderBottom:"1px solid #eee"}}>Unscheduled Service Appointments (3)</div>
+        <table className="slds-table slds-table_bordered slds-table_cell-buffer" style={{fontSize:".8rem"}}>
+          <thead><tr><th>Appt #</th><th>Customer</th><th>Type</th><th>Priority</th><th>Window</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">SA-1340</a></td><td>De Bruin Logistics</td><td>Emergency Repair</td><td><span className="slds-badge slds-theme_error">High</span></td><td>11:00 – 13:00</td></tr>
+            <tr><td><a href="#">SA-1341</a></td><td>Nova Foods BV</td><td>PM Service</td><td><span className="slds-badge slds-theme_warning">Medium</span></td><td>13:00 – 15:00</td></tr>
+            <tr><td><a href="#">SA-1342</a></td><td>Hoffman Manufacturing</td><td>Inspection</td><td><span className="slds-badge">Low</span></td><td>15:00 – 17:00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- PROTOTYPE: Screen 3 — Job Completion (mobile) ---------- */
 function JobCompletion(){
-  const [status,setStatus]=useState("Completed");
-  return(
-   <Phone>
-     <div className="appbar"><div className="small">Work Order · 000044830</div><div className="big">Complete Job</div></div>
-     {/* path */}
-     <div className="slds-path" style={{padding:"8px 4px"}}>
-       <div className="slds-grid slds-path__track"><div className="slds-grid slds-path__scroller-container"><div className="slds-path__scroller"><div className="slds-path__scroller_inner">
-         <ul className="slds-path__nav" role="listbox">
-           {["Dispatched","Traveling","On Site","Completed"].map((s,i)=>(
-             <li key={i} className={"slds-path__item "+(i<3?"slds-is-complete":"slds-is-current slds-is-active")} role="presentation">
-               <a className="slds-path__link" href="#" role="option"><span className="slds-path__stage">
-                 <svg className="slds-icon slds-icon_x-small"><use xlinkHref={SP+"/utility-sprite/svg/symbols.svg#check"}></use></svg></span>
-                 <span className="slds-path__title">{s}</span></a></li>
-           ))}
-         </ul>
-       </div></div></div></div>
-     </div>
-     <div style={{padding:"14px 16px"}}>
-       <div className="slds-form-element slds-m-bottom_small">
-         <label className="slds-form-element__label" style={{fontWeight:600}}>Job Status</label>
-         <div className="slds-form-element__control"><div className="slds-select_container">
-           <select className="slds-select" value={status} onChange={e=>setStatus(e.target.value)}>
-             <option>Completed</option><option>Incomplete</option><option>Cannot Complete</option></select></div></div>
-       </div>
-       <div className="slds-form-element slds-m-bottom_small">
-         <label className="slds-form-element__label" style={{fontWeight:600}}>Work Performed</label>
-         <textarea className="slds-textarea" rows="3" defaultValue="Replaced air/oil separator, cleared VSD fault E-44, output pressure restored to 7.6 bar. Verified stable over 20 min run." style={{fontSize:".82rem"}}></textarea>
-       </div>
-       <label className="slds-form-element__label" style={{fontWeight:600}}>Parts Used</label>
-       {[["Air/Oil Separator (AC-3001-SEP)",true],["Air Filter Element ×2",true],["Roto-Xtend Oil 20L",false]].map((p,i)=>(
-         <div key={i} className="slds-checkbox slds-m-bottom_xx-small"><input type="checkbox" id={"p"+i} defaultChecked={p[1]}/><label className="slds-checkbox__label" htmlFor={"p"+i}><span className="slds-checkbox_faux"></span><span className="slds-form-element__label" style={{fontSize:".82rem"}}>{p[0]}</span></label></div>
-       ))}
-       <div className="slds-grid slds-gutters slds-m-vertical_small">
-         <div className="slds-col"><div className="slds-box slds-box_x-small slds-text-align_center"><div style={{fontSize:".7rem",color:"#888"}}>TIME SPENT</div><div style={{fontSize:"1.2rem",fontWeight:700}}>2h 10m</div></div></div>
-         <div className="slds-col"><div className="slds-box slds-box_x-small slds-text-align_center"><div style={{fontSize:".7rem",color:"#888"}}>PHOTO</div><div style={{fontSize:"1.4rem"}}>📷 +</div></div></div>
-       </div>
-       <label className="slds-form-element__label" style={{fontWeight:600}}>Customer Sign-off</label>
-       <div style={{border:"1.5px dashed #c0c0c0",borderRadius:8,height:80,display:"flex",alignItems:"center",justifyContent:"center",color:"#aaa",fontStyle:"italic",fontSize:".85rem",margin:"4px 0 6px"}}>Erik Smit ✍️</div>
-       <div style={{display:"flex",alignItems:"center",gap:6,fontSize:".75rem",color:"#04844b",fontWeight:600,margin:"6px 0"}}>● Synced — dispatcher updated in real time</div>
-       <button className="slds-button slds-button_brand" style={{width:"100%",padding:"11px",marginTop:6}}>Complete Work</button>
-     </div>
-   </Phone>
+  const [steps,setSteps]=useState([true,true,true,false]);
+  const labels=["Replace valve seal (2 of 2)","Run system diagnostics","Verify operating pressure","Customer sign-off"];
+  const toggle=(i)=>setSteps(s=>s.map((v,j)=>j===i?!v:v));
+  const done=steps.filter(Boolean).length;
+  const allDone=done===steps.length;
+  return (
+    <div className="phone">
+      <div className="phone-inner">
+        <div className="statusbar"><span>9:41</span><span>✈ 100% ▮</span></div>
+        <div className="m-appbar">
+          <span className="x">‹</span>
+          <div>
+            <div className="lbl">Work Order · 00045821</div>
+            <div className="ttl">Complete Job</div>
+          </div>
+        </div>
+        {/* path */}
+        <div style={{background:"#fff",padding:"10px 14px",borderBottom:"1px solid #eee",fontSize:".72rem",display:"flex",justifyContent:"space-between",color:"#5c5c5c"}}>
+          <span style={{color:"#04844b"}}>✓ Dispatched</span>
+          <span style={{color:"#04844b"}}>✓ Traveling</span>
+          <span style={{color:"#04844b"}}>✓ On Site</span>
+          <span style={{color:allDone?"#0176d3":"#9c9c9c",fontWeight:700}}>Completed</span>
+        </div>
+        <div className="app-scroll">
+          <div className="m-section">
+            <p className="sec-h">Completion Checklist ({done}/4)</p>
+            {labels.map((l,i)=>(
+              <label key={i} style={{display:"flex",gap:10,alignItems:"center",padding:"9px 0",fontSize:".84rem",borderBottom:i<3?"1px solid #f1f1f1":"none",cursor:"pointer"}}>
+                <input type="checkbox" checked={steps[i]} onChange={()=>toggle(i)} style={{width:18,height:18,accentColor:"#0176d3"}}/>
+                <span style={{textDecoration:steps[i]?"line-through":"none",color:steps[i]?"#9c9c9c":"#181818"}}>{l}</span>
+              </label>
+            ))}
+          </div>
+          <div className="m-section">
+            <p className="sec-h">Before / After Photos</p>
+            <div style={{display:"flex",gap:8}}>
+              <div style={{flex:1,height:78,borderRadius:8,background:"linear-gradient(135deg,#cdd7e0,#9aa7b3)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:".68rem"}}>Before<br/>bearing</div>
+              <div style={{flex:1,height:78,borderRadius:8,background:"linear-gradient(135deg,#bfe3cf,#7fc59c)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:".68rem"}}>After<br/>new seal</div>
+              <div style={{flex:1,height:78,borderRadius:8,border:"2px dashed #c9c9c9",display:"flex",alignItems:"center",justifyContent:"center",color:"#0176d3",fontSize:"1.4rem"}}>＋</div>
+            </div>
+          </div>
+          <div className="m-section">
+            <p className="sec-h">Customer Signature</p>
+            <div style={{border:"1px solid #eee",borderRadius:8,padding:"14px",textAlign:"center"}}>
+              <div style={{fontFamily:"cursive",fontSize:"1.5rem",color:"#032d60"}}>Jan Smith</div>
+              <div style={{fontSize:".7rem",color:"#5c5c5c",marginTop:4}}>Signed on site · Time on site: 47 min</div>
+            </div>
+          </div>
+          <div className="m-section" style={{background:"#eef6ff"}}>
+            <p style={{margin:0,fontSize:".8rem",color:"#032d60"}}>Status selector</p>
+            <select className="slds-select" defaultValue="completed" style={{marginTop:6}}>
+              <option value="completed">Completed</option>
+              <option value="cannot">Cannot Complete</option>
+              <option value="followup">Follow-up Required</option>
+            </select>
+          </div>
+        </div>
+        <div className="primary-bar">
+          <button className="slds-button slds-button_brand slds-button_stretch" disabled={!allDone}
+            style={{background:allDone?"#04844b":"#c9c9c9",borderColor:allDone?"#04844b":"#c9c9c9"}}>
+            {allDone? "✓ Submit & Notify Dispatcher" : `Complete all steps (${done}/4)`}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
-/* ---------------- App ---------------- */
-const SCREENS=[
-  {id:"dispatcher-console",title:"Dispatcher Real-Time Console",mobile:false,
-   narrative:"Here's your dispatcher dashboard—see every technician on the map in real time, their current job status and upcoming assignments. Identify who's available and route the next priority job with confidence.",comp:DispatcherConsole},
-  {id:"prework-brief",title:"Technician Prework Brief",mobile:false,
-   narrative:"When Donald receives this job, he immediately sees the full asset history, last service date, known issues and exactly what needs to be done—no more surprises on site.",comp:PreworkBrief},
-  {id:"parts-staging",title:"Parts Planning & Staging",mobile:false,
-   narrative:"The system flags the parts needed and checks real-time inventory. You stage them in advance so the technician leaves the depot fully equipped—eliminating the 'I'll call you back' moment.",comp:PartsStaging},
-  {id:"technician-mobile-brief",title:"Technician Mobile Job Brief",mobile:true,
-   narrative:"The technician opens the job on their phone before leaving the depot—site map, asset photos, failure history and a checklist of exactly what to do, all available offline.",comp:MobileBrief},
-  {id:"job-completion-update",title:"Job Completion & Status Update",mobile:true,
-   narrative:"Once finished, the technician marks the job complete, snaps a photo and confirms parts used. The dispatcher sees the status update instantly and can dispatch the next job.",comp:JobCompletion},
+/* ---------- PROTOTYPE WRAPPER ---------- */
+const screens=[
+  {id:"prework",label:"1 · Prework Brief",persona:"Technician",
+   narrative:"Donald shows how technicians receive a complete prework brief on their mobile device before they drive to the customer site—including the asset's maintenance history, previous issues, and exactly which parts to bring. They arrive fully prepared, cutting repeat visits.",
+   render:()=><PreworkBrief/>},
+  {id:"dispatch",label:"2 · Dispatcher Visibility",persona:"Dispatcher",
+   narrative:"Dispatchers see every technician's location and job status on a live console. When a high-priority customer calls in, the closest available technician (Ahmed) is instantly visible and can be reassigned—no more calling around.",
+   render:()=><DispatcherConsole/>},
+  {id:"complete",label:"3 · Job Completion",persona:"Technician",
+   narrative:"When the job is done, the technician completes a checklist, captures photos and a signature, and marks it complete. The dispatcher sees the update instantly and can dispatch the next job.",
+   render:()=><JobCompletion/>},
 ];
 
-const VALUE=[
-  {ico:"🎯",d:"First-time fix, every time",m:"% of jobs completed on first visit",p:"Complete asset history and a pre-work brief equip technicians to resolve the issue on the first visit."},
-  {ico:"📦",d:"Parts staged before dispatch",m:"Parts availability at dispatch · trip fulfilment rate",p:"Real-time inventory checks ensure the right parts leave the depot — no aborted trips."},
-  {ico:"📍",d:"Live dispatch visibility",m:"Avg. response time to priority jobs",p:"See technician location and job progress in real time to optimise every assignment."},
-];
+function Prototype(){
+  const [active,setActive]=useState(0);
+  const s=screens[active];
+  const isDesktop=s.id==="dispatch";
+  return (
+    <section className="block alt">
+      <div className="wrap">
+        <h2 className="section-title">See it in action</h2>
+        <p className="section-sub">Click through the flow Donald walks every Atlas Copco service team through — from prework brief to dispatch to completion.</p>
+        <div className="demo-tabs">
+          {screens.map((sc,i)=>(
+            <button key={sc.id} className={"demo-tab"+(i===active?" active":"")} onClick={()=>setActive(i)}>{sc.label}</button>
+          ))}
+        </div>
+        <div className="coach">
+          <strong>{s.persona} view — </strong>{s.narrative}
+        </div>
+        {isDesktop ? <DispatcherConsole/> : <div className="phone-wrap">{s.render()}</div>}
+      </div>
+    </section>
+  );
+}
 
-const PAINS=[
-  {p:"Technicians arrive on site without complete asset history",imp:"Repeat visits · extended downtime · lost productivity",w:"Today: technicians phone the dispatcher or customer mid-job to gather information."},
-  {p:"No visibility into required parts before dispatch",imp:"Incomplete repairs · trip failures · return visits",w:"Today: technicians improvise or delay the repair while parts are sourced."},
-  {p:"Dispatchers can't see real-time location or job status",imp:"Poor scheduling · slow emergency response",w:"Today: manual check-ins via phone calls and text messages."},
+/* ---------- PAINS ---------- */
+const pains=[
+  {p:"Technicians arrive on-site without complete asset history and required parts information",
+   i:"Causes repeat visits, wasted time, and delayed customer resolution",
+   w:"Today: technicians manually search for asset and parts info on site, or call back to the office."},
+  {p:"Dispatchers cannot see technician location or job status in real time",
+   i:"Cannot reassign jobs dynamically; poor visibility into field operations; slow response to urgency",
+   w:"Today: manual phone calls or messages to check status."},
 ];
+function Pains(){
+  return (
+    <section className="block">
+      <div className="wrap">
+        <h2 className="section-title">What we heard from your team</h2>
+        <p className="section-sub">The challenges this prototype is built to solve, in your words.</p>
+        <div className="pain-grid">
+          {pains.map((x,i)=>(
+            <div className="pain" key={i}>
+              <h4>{x.p}</h4>
+              <p className="impact">{x.i}</p>
+              <span className="work">{x.w}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- FOOTER ---------- */
+function Foot(){
+  return (
+    <footer className="foot">
+      <div className="wrap">
+        <span><b>Prototype generated by Cue</b></span>
+        <span>This is an illustrative concept for Atlas Copco built on Salesforce Field Service patterns — not a final product. Data shown is sample data for demonstration purposes.</span>
+      </div>
+    </footer>
+  );
+}
 
 function App(){
-  const [active,setActive]=useState(0);
-  const S=SCREENS[active];
-  const Comp=S.comp;
-  return(<div>
-    {/* HERO */}
-    <div className="hero"><div className="wrap">
-      <p className="eyebrow">Atlas Copco · Field Service</p>
-      <h1>Every technician, <em>fully briefed</em> before they arrive</h1>
-      <p>Give dispatchers live visibility, stage the right parts before dispatch, and put complete asset history in every technician's pocket — so the job is done right, first time.</p>
-    </div></div>
-
-    {/* VALUE DRIVERS */}
-    <section><div className="wrap">
-      <h2 className="sec-h">Why it matters</h2>
-      <p className="sec-sub">Three outcomes that turn field service from reactive firefighting into a predictable, first-time-fix operation.</p>
-      <div className="grid">
-        {VALUE.map((v,i)=>(<div className="card" key={i}>
-          <div className="ico">{v.ico}</div><h3>{v.d}</h3><div className="metric">{v.m}</div><p>{v.p}</p></div>))}
-      </div>
-    </div></section>
-
-    {/* PROTOTYPE */}
-    <section style={{background:"#f4f7fb",borderTop:"1px solid #e6edf4",borderBottom:"1px solid #e6edf4"}}><div className="wrap">
-      <h2 className="sec-h">See it in action</h2>
-      <p className="sec-sub">Click through the full workflow — from the dispatcher console to the technician completing the job on their phone.</p>
-      <div className="proto-wrap">
-        <div className="tabs">
-          {SCREENS.map((s,i)=>(<button key={s.id} className={"tab"+(i===active?" active":"")} onClick={()=>setActive(i)}>{i+1}. {s.title}</button>))}
-        </div>
-        <div className="coach"><div className="dot">{active+1}</div><p>{S.narrative}</p></div>
-        {S.mobile
-          ? <Comp/>
-          : <div className="browser">
-              <div className="browser-bar"><span className="d" style={{background:"#ff5f57"}}></span><span className="d" style={{background:"#febc2e"}}></span><span className="d" style={{background:"#28c840"}}></span><span className="url">atlascopco.lightning.force.com/field-service</span></div>
-              <Comp/>
-            </div>}
-      </div>
-    </div></section>
-
-    {/* WHAT WE HEARD */}
-    <section><div className="wrap">
-      <h2 className="sec-h">What we heard from your team</h2>
-      <p className="sec-sub">The challenges your service managers, dispatchers and field technicians raised — and what they cost today.</p>
-      <div className="grid">
-        {PAINS.map((p,i)=>(<div className="pain" key={i}>
-          <h4>{p.p}</h4><div className="imp">Impact: {p.imp}</div><p>{p.w}</p></div>))}
-      </div>
-    </div></section>
-
-    <footer><div className="wrap">
-      <strong>Prototype generated by Cue</strong>
-      <div style={{marginTop:6}}>This is an illustrative concept created for Atlas Copco, not a final product. Data shown is sample data for demonstration purposes.</div>
-    </div></footer>
-  </div>);
+  return (<>
+    <Hero/>
+    <ValueDrivers/>
+    <Prototype/>
+    <Pains/>
+    <Foot/>
+  </>);
 }
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
